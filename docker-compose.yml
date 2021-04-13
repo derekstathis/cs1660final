@@ -1,0 +1,84 @@
+version: '3'
+services:
+    toolbox:
+        build: .
+        environment: 
+            - DISPLAY=172.27.208.1:0.0
+        container_name: Toolbox
+
+    apache_hadoop:
+        image: sequenceiq/hadoop-docker:2.7.0
+        ports:
+            -   6969:6969
+        container_name: Hadoop
+    
+    apache_spark:
+        image: bitnami/spark
+        ports:
+            -   6961:6961
+        container_name: Spark
+        
+        
+    git:
+        image: bitnami/git
+        container_name: Git
+        ports:
+            -   7272:7272
+        tty: true
+
+    jupyter_notebook:
+        image: jupyter/minimal-notebook
+        environment:
+            -   JUPYTER_TOKEN=password
+        ports:
+            -   8888:8888
+        volumes:
+            -   .:/jupyter
+        container_name: Jupyter_Notebook
+            
+
+    markdown:
+        image: v4tech/markdown-editor
+        ports:
+            -   12345:80
+        container_name: Markdown
+
+
+    orange:
+        image: acopar/orange-docker
+        ports:
+            -   6901:6901
+        volumes:
+            -   .:/home/orange/Documents
+        environment: 
+            - DISABLE_AUTH=true
+        container_name: Orange
+
+    rstudio:
+        image: rocker/rstudio
+        ports:
+            - 8787:8787
+        environment: 
+            - DISABLE_AUTH=true
+        volumes:
+            - .:/home/rstudio
+        container_name: RStudio
+
+
+    spyder:
+        image: compdatasci/spyder-desktop
+        ports:
+            -   6080:6080
+        container_name: Spyder
+        
+
+    tensorflow:
+        image: tensorflow/tensorflow:latest-jupyter
+        ports:
+            -   8889:8888
+        container_name: Tensorflow
+        environment:
+            -   JUPYTER_TOKEN=password
+
+
+    
